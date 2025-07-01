@@ -1,6 +1,6 @@
 # Team2-FrontEnd
 
-### 기술 스택
+## 기술 스택
 
 * HTML5
 * CSS3
@@ -8,7 +8,14 @@
 
 #
 
-### Commit Message Convention
+## 파일 구조
+```
+
+```
+
+#
+
+## Commit Message Convention
 
 | Tag        | Description        |
 | ---------- | ------------------ |
