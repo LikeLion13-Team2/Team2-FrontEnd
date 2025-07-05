@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sign_up</title>
+    <link rel="stylesheet" href="common.css" />
+  </head>
+  <body>
+    <main class="sign-up-container">
+      <section class="nickname-section">
+        <h2 class="section-title">닉네임</h2>
+        <input
+          type="text"
+          class="nickname-input"
+          placeholder="닉네임을 입력해주세요"
+        />
+      </section>
+
+      <section class="goals-section">
+        <h2 class="section-title">공부 목표</h2>
+
+        <div class="goal-category">
+          <label class="category-label">학생</label>
+          <div class="tag-group">
+            <button class="tag-button">대입</button>
+            <button class="tag-button selected">내신/학점</button>
+            <button class="tag-button">편입</button>
+            <button class="tag-button">기타</button>
+          </div>
+        </div>
+
+        <div class="goal-category">
+          <label class="category-label">공무원</label>
+          <div class="tag-group">
+            <button class="tag-button">공무원</button>
+            <button class="tag-button">소방</button>
+            <button class="tag-button">경찰</button>
+            <button class="tag-button">기타</button>
+          </div>
+        </div>
+
+        <div class="goal-category professional-group">
+          <label class="category-label">전문직</label>
+          <div class="tag-group">
+            <div class="main-row">
+              <button class="tag-button">의사</button>
+              <button class="tag-button">공인중개사</button>
+              <button class="tag-button">교사</button>
+              <button class="tag-button">세무사</button>
+            </div>
+            <div class="sub-row">
+              <button class="tag-button">변호사</button>
+              <button class="tag-button">노무사</button>
+              <button class="tag-button">기타</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="goal-category">
+          <label class="category-label">기타</label>
+          <div class="tag-group">
+            <button class="tag-button selected">자격증</button>
+            <button class="tag-button selected">어학</button>
+            <button class="tag-button">취업</button>
+            <button class="tag-button">기타</button>
+          </div>
+        </div>
+      </section>
+
+      <button class="submit-button">공부 시작하기</button>
+    </main>
+
+    <script>
+      const tagButtons = document.querySelectorAll(".tag-button");
+
+      tagButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          button.classList.toggle("selected");
+        });
+      });
+    </script>
+  </body>
+</html>
