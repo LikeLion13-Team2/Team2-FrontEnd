@@ -1,20 +1,19 @@
 .sign-up-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  /* justify-content: center; */
   margin: 0 auto;
   width: 50%;
+  max-width: 600px;
 }
 
 /* 닉네임 */
 .nickname-section {
-  /* width: 100%; */
   margin-bottom: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  width: 100%;
 }
 
 .section-title {
@@ -31,7 +30,7 @@
   border-radius: 10px;
   font-size: 16px;
   color: #333;
-  width: 100%;
+  width: 50%;
 }
 
 .nickname-input::placeholder {
@@ -48,10 +47,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 50px;
+  width: 100%;
 }
 
+/*목표 카테고리(학생, 공무원 등)*/
 .goal-category {
   display: flex;
   flex-direction: row;
@@ -62,17 +63,19 @@
   width: 100%;
 }
 
+/* 카테고리 레이블 (학생, 공무원, 전문직, 기타) */
 .category-label {
   font-size: 16px;
   font-weight: 500;
   color: #555;
-  margin-right: 8px;
+
   flex-shrink: 0;
   white-space: nowrap;
   min-width: 80px;
   padding-top: 20px;
 }
 
+/* 태그 그룹 (버튼들을 감싸는 컨테이너) */
 .tag-group {
   display: flex;
   flex-wrap: nowrap;
@@ -85,24 +88,19 @@
 }
 
 .tag-button {
+  padding: 15px 30px;
+  font-size: 14px;
+  color: #666;
   background-color: #ffffff;
   border: 1px solid #dcdcdc;
-  color: #666;
-  padding: 15px 30px;
   border-radius: 15px;
-  font-size: 14px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  width: 120px;
   min-width: 120px;
   text-align: center;
-}
-
-.tag-button.selected {
-  background-color: #4285f4;
-  border-color: #3367d6;
-  color: white;
-  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  box-sizing: border-box;
 }
 
 /*전문직 tag group은 따로*/
@@ -113,13 +111,7 @@
   width: 100%;
 }
 
-.professional-group .tag-group > .sub-row {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-start;
-  width: 100%;
-}
-
+.professional-group .tag-group > .sub-row,
 .professional-group .tag-group > .main-row {
   display: flex;
   gap: 12px;
@@ -132,10 +124,18 @@
 }
 
 .tag-button.selected {
-  background-color: #e8f0fe;
-  border-color: #4285f4;
+  padding: 15px 30px;
+  font-size: 14px;
   color: #4285f4;
+  background-color: #e8f0fe;
+  border: 1px solid #4285f4;
+  border-radius: 15px;
+  width: 120px;
+  min-width: 120px;
   font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
 /* 공부 시작하기 버튼 */
@@ -150,10 +150,9 @@
   cursor: pointer;
   width: 100%;
   max-width: 300px;
-  margin-top: 40px;
   transition: background-color 0.2s;
   display: block;
-  margin: 0 auto;
+  margin: 40px auto 0;
 }
 
 .submit-button:hover {
