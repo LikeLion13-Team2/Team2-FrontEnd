@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>AI 분석 리포트</title>
+    <link rel="stylesheet" href="style/report.css" />
+    <link rel="stylesheet" href="style/layout.css" />
+    <script src="js/renderSidebar.js" defer></script>
+  </head>
+  <body>
+    <!-- 사이드바는 script.js에서 불러옴 -->
+    <div class="main">
+      <div class="header">AI 분석 리포트</div>
+
+      <div class="summary">
+        <div class="left">
+          <p>
+            <strong>오늘의 집중 유형</strong>
+            <span style="color: #4f9aff">롤러코스터형 🎢</span>
+          </p>
+          <small
+            >집중 시작은 좋았지만, 점수 변동이 컸어요!</small
+          >
+        </div>
+        <div class="right">
+          <p><strong>포코의 한줄 총평</strong></p>
+          <small
+            >시작은 좋았는데, 중간에 살짝 흔들렸어요😅 다음엔
+            끝까지 집중!</small
+          >
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="active">일간</button>
+        <button>주간</button>
+        <button>월간</button>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h4>나의 평균 집중 점수</h4>
+          <h2>67점</h2>
+          <small
+            >어제보다 1점 더 높아요!<br />최고 점수는
+            80점이었어요</small
+          >
+          <br /><br />
+          <h4>나의 공부시간</h4>
+          <h2>5시간 23분</h2>
+          <small>어제보다 1시간 12분 더 공부했어요!</small>
+        </div>
+        <div class="card">
+          <h4>
+            누적 집중 시간:
+            <span style="color: #4f9aff">90분</span>
+          </h4>
+          <p>
+            쉬는 시간: <span style="color: #4f9aff">20분</span>
+          </p>
+          <p>
+            딴짓 누적 시간: <span style="color: red">20분</span>
+          </p>
+          <p>
+            최장 집중 시간:
+            <span style="color: #4f9aff">42분</span>
+          </p>
+          <p>
+            평균 딴짓 간격: <span style="color: red">20분</span>
+          </p>
+          <p>
+            평균 집중 길이:
+            <span style="color: #4f9aff">20분</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="graph-section">
+        <h3>집중 점수 그래프</h3>
+        <div class="graph-placeholder">라인 그래프 영역</div>
+        <h3 style="margin-top: 20px">
+          집중 피크 타임
+          <span style="color: #4f9aff">13:00 - 14:00</span>
+        </h3>
+      </div>
+
+      <div
+        class="graph-section"
+        style="margin-top: 20px; display: flex; gap: 20px"
+      >
+        <div style="flex: 1">
+          <h4>요일별 활동 분석</h4>
+          <div class="chart-placeholder">막대 그래프 영역</div>
+        </div>
+        <div style="flex: 1">
+          <h4>활동 비율 분석</h4>
+          <div class="chart-placeholder">도넛 차트 영역</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
