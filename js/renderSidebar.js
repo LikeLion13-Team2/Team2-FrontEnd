@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("./components/sidebar.html")
+  fetch("/components/sidebar.html")
     .then((res) => {
       if (!res.ok) throw new Error("사이드바 로딩 실패");
       return res.text();
@@ -20,7 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
         location.pathname.split("/").pop() || "index.html";
       const links = document.querySelectorAll("aside a");
       links.forEach((link) => {
-        const target = link.getAttribute("href");
+        const target = link
+          .getAttribute("href")
+          .split("/")
+          .pop();
         if (target === currentPage) {
           link.classList.add("active");
         }
