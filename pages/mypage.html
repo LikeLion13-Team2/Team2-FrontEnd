@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>마이페이지</title>
+    <link rel="stylesheet" href="/style/mypage.css" />
+    <link rel="stylesheet" href="/style/layout.css" />
+    <script src="/js/renderSidebar.js"></script>
+  </head>
+  <body>
+    <!-- 사이드바 renderSidebar.js -->
+    <div class="main">
+      <main class="mypage-content">
+        <section class="nickname-section">
+          <h2 class="section-title">닉네임</h2>
+          <input
+            type="text"
+            class="nickname-input"
+            placeholder="닉네임을 입력해주세요"
+          />
+        </section>
+
+        <section class="goals-section">
+          <div class="section-header">
+            <h2 class="section-title">공부 목표</h2>
+            <button class="edit-btn">
+              <img
+                src="/assets/mypage_icon/edit.png"
+                alt="편집"
+              />
+              편집
+            </button>
+          </div>
+
+          <div class="goal-category">
+            <div class="category-label">학생</div>
+            <div class="tag-group">
+              <button class="tag-button">대입</button>
+              <button class="tag-button">내신/학점</button>
+              <button class="tag-button">편입</button>
+              <button class="tag-button">기타</button>
+            </div>
+          </div>
+
+          <div class="goal-category">
+            <div class="category-label">공무원</div>
+            <div class="tag-group">
+              <button class="tag-button">공무원</button>
+              <button class="tag-button">소방</button>
+              <button class="tag-button">경찰</button>
+              <button class="tag-button">기타</button>
+            </div>
+          </div>
+
+          <div class="goal-category professional-group">
+            <div class="category-label">전문직</div>
+            <div class="tag-group">
+              <div class="main-row">
+                <button class="tag-button">의사</button>
+                <button class="tag-button">공인중개사</button>
+                <button class="tag-button">교사</button>
+                <button class="tag-button">세무사</button>
+              </div>
+              <div class="sub-row">
+                <button class="tag-button">변호사</button>
+                <button class="tag-button">노무사</button>
+                <button class="tag-button">기타</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="goal-category">
+            <div class="category-label">기타</div>
+            <div class="tag-group">
+              <button class="tag-button">자격증</button>
+              <button class="tag-button">어학</button>
+              <button class="tag-button">취업</button>
+              <button class="tag-button">기타</button>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer-links">
+          <a href="#">이용약관</a>
+          <a href="#">개인정보 처리방침</a>
+          <a href="#">로그아웃</a>
+          <a class="danger" href="#">회원 탈퇴</a>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const tagButtons =
+          document.querySelectorAll(".tag-button");
+        const editBtn = document.querySelector(".edit-btn");
+        let isEditing = false;
+
+        const toggleTagButtons = (enable) => {
+          tagButtons.forEach((button) => {
+            if (enable) {
+              button.disabled = false;
+              button.addEventListener("click", handleToggle);
+            } else {
+              button.disabled = true;
+            }
+          });
+        };
+
+        const handleToggle = (e) => {
+          e.currentTarget.classList.toggle("selected");
+        };
+
+        editBtn.addEventListener("click", () => {
+          isEditing = !isEditing;
+          editBtn.innerHTML = isEditing
+            ? `<img src="/assets/mypage_icon/done.png" alt="완성" class="icon-img" /> 완성`
+            : `<img src="/assets/mypage_icon/edit.png" alt="편집" class="icon-img" /> 편집`;
+          toggleTagButtons(isEditing);
+        });
+
+        toggleTagButtons(false);
+      });
+    </script>
+  </body>
+</html>

@@ -14,7 +14,7 @@ body {
 /* 사이드바 공통 */
 aside {
   width: 200px;
-  min-width: 140px;
+  min-width: 160px;
   max-width: 200px;
   background-color: #eaf1ff;
   padding: 20px;
@@ -23,8 +23,13 @@ aside {
   gap: 20px;
 }
 
-aside img {
+aside .logo_img {
   max-width: 100px;
+}
+
+aside .icon img {
+  width: 22px;
+  height: 22px;
 }
 
 aside a {
