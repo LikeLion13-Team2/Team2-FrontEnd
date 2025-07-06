@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>학습 대시보드</title>
+    <link rel="stylesheet" href="style/index.css" />
+    <link rel="stylesheet" href="style/layout.css" />
+    <script src="js/renderSidebar.js" defer></script>
+  </head>
+  <body>
+    <!-- 사이드바 renderSidebar.js -->
+    <div class="main">
+      <div class="header">
+        <span class="highlight">95점</span> 집중력 최고🔥<br />
+        <p>시선 안정적, 졸음 없음, 자세 93% 유지 중</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>최근 학습 강의</h3>
+          <p><strong>인프런</strong></p>
+          <p>▶ 실전! 스프링부트와 JPA...</p>
+          <p>17:00 ~ 18:00</p>
+          <p>48분 / 60분</p>
+        </div>
+        <div class="card">
+          <h3>오늘 공부 시간</h3>
+          <div class="circle-chart">원형 차트 영역</div>
+        </div>
+      </div>
+
+      <div class="calendar">
+        <h3>연간 학습</h3>
+        <div class="heatmap">
+          <!-- 연간 히트맵 뷰 -->
+        </div>
+        <p class="study-time">
+          <!-- 완료 수업: 94 / 총 학습: 23시간 38분 / 노트: 0 / 완강: -->
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
