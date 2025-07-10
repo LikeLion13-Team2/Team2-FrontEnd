@@ -28,6 +28,38 @@ document.addEventListener("DOMContentLoaded", () => {
           link.classList.add("active");
         }
       });
+
+      // ✅ 아이콘 변경 로직 여기서 실행
+      const menuLinks = document.querySelectorAll("aside a");
+
+      function updateIcons(activeLink) {
+        menuLinks.forEach((link) => {
+          const img = link.querySelector("img");
+          const href = link.getAttribute("href");
+          const iconName = href.split("/").pop().split(".")[0]; // ex: home, report
+
+          if (link === activeLink) {
+            img.src = `/assets/sidebar_icon/${iconName}_white.png`;
+          } else {
+            img.src = `/assets/sidebar_icon/${iconName}.png`;
+          }
+        });
+      }
+
+      menuLinks.forEach((link) => {
+        link.addEventListener("click", function () {
+          updateIcons(this);
+        });
+      });
+
+      // 현재 페이지에 맞게 아이콘 설정
+      links.forEach((link) => {
+        const href = link.getAttribute("href");
+        const fileName = href.split("/").pop();
+        if (fileName === currentPage) {
+          updateIcons(link);
+        }
+      });
     })
     .catch((err) => {
       console.error("사이드바 로딩 중 오류 발생:", err);
