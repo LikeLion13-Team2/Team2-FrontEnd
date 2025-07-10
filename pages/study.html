@@ -6,92 +6,105 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>마이페이지</title>
-    <link rel="stylesheet" href="/style/mypage.css" />
+    <title>공부페이지</title>
     <link rel="stylesheet" href="/style/layout.css" />
+    <link rel="stylesheet" href="/style/popup.css" />
     <script src="/js/renderSidebar.js"></script>
-    <script src="/js/mypage.js"></script>
+    <script src="/libs/chart.umd.js"></script>
+    <script src="/libs/webgazer.js"></script>
   </head>
   <body>
-    <!-- 사이드바 renderSidebar.js -->
-    <div class="main">
-      <main class="mypage-content">
-        <section class="nickname-section">
-          <h2 class="section-title">닉네임</h2>
-          <input
-            type="text"
-            class="nickname-input"
-            placeholder="닉네임을 입력해주세요"
-          />
-        </section>
-
-        <section class="goals-section">
-          <div class="section-header">
-            <h2 class="section-title">공부 목표</h2>
-            <button class="edit-btn">
-              <img
-                src="/assets/mypage_icon/edit.png"
-                alt="편집"
-              />
-              편집
-            </button>
+    <div class="main step step-2">
+      <div class="timer-container">
+        <div class="circle">
+          <svg class="progress-ring" width="120" height="120">
+            <circle class="ring-bg" cx="60" cy="60" r="50" />
+            <circle
+              class="ring-progress"
+              cx="60"
+              cy="60"
+              r="50"
+            />
+          </svg>
+          <div class="circle-inner">
+            <span id="time-text">20분</span>
           </div>
+        </div>
 
-          <div class="goal-category">
-            <div class="category-label">학생</div>
-            <div class="tag-group">
-              <button class="tag-button">대입</button>
-              <button class="tag-button">내신/학점</button>
-              <button class="tag-button">편입</button>
-              <button class="tag-button">기타</button>
-            </div>
-          </div>
+        <div class="side-controls">
+          <div class="timer-controls">
+            <div class="starting-controls">
+              <select class="dropdown">
+                <option>카테고리</option>
+              </select>
 
-          <div class="goal-category">
-            <div class="category-label">공무원</div>
-            <div class="tag-group">
-              <button class="tag-button">공무원</button>
-              <button class="tag-button">소방</button>
-              <button class="tag-button">경찰</button>
-              <button class="tag-button">기타</button>
-            </div>
-          </div>
-
-          <div class="goal-category professional-group">
-            <div class="category-label">전문직</div>
-            <div class="tag-group">
-              <div class="main-row">
-                <button class="tag-button">의사</button>
-                <button class="tag-button">공인중개사</button>
-                <button class="tag-button">교사</button>
-                <button class="tag-button">세무사</button>
-              </div>
-              <div class="sub-row">
-                <button class="tag-button">변호사</button>
-                <button class="tag-button">노무사</button>
-                <button class="tag-button">기타</button>
+              <div class="duration-control">
+                <button id="minus">–</button>
+                <input
+                  type="number"
+                  id="minutes"
+                  min="1"
+                  value="20"
+                />분
+                <button id="plus">+</button>
               </div>
             </div>
-          </div>
-
-          <div class="goal-category">
-            <div class="category-label">기타</div>
-            <div class="tag-group">
-              <button class="tag-button">자격증</button>
-              <button class="tag-button">어학</button>
-              <button class="tag-button">취업</button>
-              <button class="tag-button">기타</button>
+            <div class="timer-btn">
+              <button class="start-btn">▶ 시작</button>
+              <button class="reset-btn">⏹ 초기화</button>
             </div>
           </div>
-        </section>
+          <div class="focus-text" style="display: none">
+            <p>시선 좌표: <span id="gaze">-</span></p>
+            <p>딴짓 여부: <span id="drowsy">-</span></p>
+            <p>집중도 점수: <span id="score">0.00</span></p>
+            <p>
+              누적 집중 시간: <span id="focusTime">00:00</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="note">
+          필기시간도 딴짓시간으로 측정될 수 있으니, 일시정지
+          하시고 필기하시는 것을 추천합니다.<br />
+          필기감지기능은 추후 개발예정입니다
+        </p>
+      </div>
 
-        <footer class="footer-links">
-          <a href="#">이용약관</a>
-          <a href="#">개인정보 처리방침</a>
-          <a href="#">로그아웃</a>
-          <a class="danger" href="#">회원 탈퇴</a>
-        </footer>
-      </main>
+      <canvas
+        id="canvas"
+        width="640"
+        height="480"
+        style="display: none"
+      ></canvas>
+
+      <div class="focus-info" style="display: none">
+        <canvas
+          id="scoreChart"
+          width="400"
+          height="150"
+        ></canvas>
+        <div
+          id="scoreBar"
+          style="
+            height: 10px;
+            background: #00c853;
+            width: 0%;
+            margin-top: 5px;
+          "
+        ></div>
+      </div>
     </div>
+    <div style="margin-top: 20px">
+      <input
+        type="number"
+        id="sessionIdInput"
+        placeholder="세션 ID 입력"
+      />
+      <button id="fetchSessionBtn">세션 조회</button>
+    </div>
+    <script src="/js/popup.js"></script>
+    <script src="/js/get.js"></script>
   </body>
 </html>
