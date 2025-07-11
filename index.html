@@ -1,70 +1,44 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>학습 대시보드</title>
-    <link rel="stylesheet" href="style/index.css" />
-    <link rel="stylesheet" href="style/layout.css" />
-    <script src="/js/renderSidebar.js" defer></script>
-    <script src="/js/index.js" defer></script>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>login</title>
+    <link rel="stylesheet" href="/style/login.css" />
+    <link rel="icon" href="data:," />
   </head>
+
   <body>
-    <div class="main">
-      <div class="header">
-        <h1>오늘의 학습 현황</h1>
-        <div class="score"><span class="highlight">95점</span>집중력 최고</div>
-        <p>시선 안정적, 졸음 없음, 자세 93% 유지 중</p>
-      </div>
+    <div class="wrapper">
+      <aside class="container">예시 화면</aside>
+      <section class="image-box">
+        <img src="/assets/foco.svg" alt="포코" width="60%" />
+        <div class="text-box">
+          AI 학습코치 <b>포코</b>가<br />
+          당신의 집중 상태를 분석해요!
+        </div>
 
-      <div class="cards">
-        <div class="card">
-          <h3>오늘의 명언</h3>
-          <p id="quote-comment">명언을 불러오는 중...</p>
-        </div>
-        <div class="card">
-          <h3>오늘 공부 시간</h3>
-          <div class="circle-chart">
-            오늘의 학습 시간을<br />원형 차트로 표시
-          </div>
-        </div>
-      </div>
-
-      <div class="calendar">
-        <h3>연간 학습 현황</h3>
-        <div class="heatmap-container">
-          <div class="heatmap-months">
-            <span>Aug</span>
-            <span>Sep</span>
-            <span>Oct</span>
-            <span>Nov</span>
-            <span>Dec</span>
-            <span>Jan</span>
-            <span>Feb</span>
-            <span>Mar</span>
-            <span>Apr</span>
-            <span>May</span>
-            <span>Jun</span>
-            <span>Jul</span>
-          </div>
-          <div class="heatmap-content">
-            <div class="heatmap-grid" id="heatmap-grid">
-              <!-- JavaScript로 생성될 예정 -->
-            </div>
-          </div>
-          <div class="heatmap-legend">
-            <span>Less</span>
-            <div class="legend-colors">
-              <div class="legend-color" data-level="0"></div>
-              <div class="legend-color" data-level="1"></div>
-              <div class="legend-color" data-level="2"></div>
-              <div class="legend-color" data-level="3"></div>
-              <div class="legend-color" data-level="4"></div>
-            </div>
-            <span>More</span>
-          </div>
-        </div>
-      </div>
+        <!-- Google OAuth 버튼 -->
+        <a
+          href="https://accounts.google.com/o/oauth2/v2/auth?client_id=906903443579-3g3sibq532i7b63houskeuumfc2v4a4k.apps.googleusercontent.com&redirect_uri=http://localhost:5500&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&access_type=offline&prompt=consent"
+          class="google-login-button"
+        >
+          <img
+            src="https://developers.google.com/identity/images/btn_google_signin_light_normal_web.png"
+            alt="Google 로그인"
+          />
+        </a>
+      </section>
     </div>
+
+    <footer class="footer">
+      계정 생성 시 개인정보 처리방침 및<br />
+      이용약관(마케팅 정보 수신동의 포함)에 동의하게 됩니다.
+    </footer>
+
+    <script src="/js/login.js"></script>
   </body>
 </html>
