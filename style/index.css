@@ -460,45 +460,25 @@ body {
   border-radius: 2px;
 }
 
-.legend-color[data-level="0"] {
-  background-color: #ebedf0;
-}
-
-.legend-color[data-level="1"] {
-  background-color: #9be9a8;
-}
-
-.legend-color[data-level="2"] {
-  background-color: #40c463;
-}
-
-.legend-color[data-level="3"] {
-  background-color: #30a14e;
-}
-
-.legend-color[data-level="4"] {
-  background-color: #216e39;
-}
-
 /* 범례 스타일 */
 .legend-color[data-level="0"] {
-  background-color: #e0e0e0; /* 없음 */
+  background-color: #e8eaf6; /* 없음 */
 }
 
 .legend-color[data-level="1"] {
-  background-color: #e8f0a1; /* 낮음 */
+  background-color: #c5cae9; /* 낮음 */
 }
 
 .legend-color[data-level="2"] {
-  background-color: #cddc39; /* 보통 */
+  background-color: #9fa8da; /* 보통 */
 }
 
 .legend-color[data-level="3"] {
-  background-color: #8bc34a; /* 집중 */
+  background-color: #7986cb; /* 집중 */
 }
 
 .legend-color[data-level="4"] {
-  background-color: #4caf50; /* 매우 집중 */
+  background-color: #5c6bc0; /* 매우 집중 */
 }
 
 /* 반응형 */

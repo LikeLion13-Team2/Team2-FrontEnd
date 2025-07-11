@@ -648,15 +648,15 @@ async function updateHeatmapForSession(sessionId) {
 function getHeatmapColor(level) {
   switch (level) {
     case 4:
-      return "#4caf50"; // 매우 집중
+      return "#5c6bc0"; // 매우 집중 (밝은 파랑)
     case 3:
-      return "#8bc34a"; // 집중
+      return "#7986cb"; // 집중 (중간 밝은 파랑)
     case 2:
-      return "#cddc39"; // 보통
+      return "#9fa8da"; // 보통 (연한 파랑)
     case 1:
-      return "#ffc107"; // 낮음
+      return "#c5cae9"; // 낮음 (아주 연한 파랑)
     default:
-      return "#e0e0e0"; // 없음
+      return "#e8eaf6"; // 없음 (밝은 회색 파랑)
   }
 }
 
