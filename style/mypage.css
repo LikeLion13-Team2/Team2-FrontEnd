@@ -1,4 +1,19 @@
-.edit-btn img {
+/* 공통 스타일 */
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+
+.icon img {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+
+.edit-btn img,
+.icon-img {
   width: 1.5em;
   height: 1.5em;
   vertical-align: middle;
@@ -6,7 +21,7 @@
   margin-bottom: 4px;
 }
 
-.main {
+.container {
   display: flex;
   width: 100%;
   max-width: calc(1440px - 200px);
@@ -27,6 +42,7 @@
   padding-top: 40px;
   flex-shrink: 0;
   background-color: #ffffff;
+  z-index: 100;
 }
 
 .menu {
@@ -86,7 +102,7 @@
   font-size: 24px;
   font-weight: bold;
   color: #333;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   width: 100%;
 }
 
@@ -103,6 +119,9 @@
   border: 1px solid #e0e0e0;
   font-size: 16px;
   color: #333;
+  /* 비활성화 시 스타일 추가 */
+  background-color: #f9f9f9;
+  cursor: default;
 }
 
 .nickname-input::placeholder {
@@ -112,6 +131,11 @@
 .nickname-input:focus {
   outline: none;
   border-color: #a0a0a0;
+}
+
+.nickname-edit-btn {
+  margin-right: 0;
+  margin-left: -1000px;
 }
 
 /*공부 목표 섹션*/
@@ -142,6 +166,7 @@
   cursor: pointer;
   padding: 0;
   white-space: nowrap;
+  margin-top: 40px;
 }
 
 /*목표 카테고리*/
@@ -188,7 +213,7 @@
   text-align: center;
 }
 
-.tag-button:hover {
+.tag-button:hover:not(:disabled) {
   background-color: #e5e5e5;
 }
 
@@ -197,6 +222,21 @@
   border-color: #4285f4;
   color: #4285f4;
   font-weight: 600;
+}
+
+.tag-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background-color: #f0f0f0;
+  border-color: #e0e0e0;
+  color: #999;
+}
+
+.tag-button.selected-disabled {
+  background-color: #b0b0b0; /* 탁한 회색 느낌 */
+  color: white;
+  pointer-events: none;
+  opacity: 0.8;
 }
 
 /* 전문직 카테고리 */
