@@ -1,6 +1,6 @@
 const API_BASE_URL = "https://focuscoach.click/api";
 const TOKEN =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyMzk4NDYsImV4cCI6MTc1MjI2MTQ0Nn0.BHXn1uxPnEjvUMcCoPGpU9Nn_je6v85C1gwm3Ut9Egg";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
 
 // API 호출 함수들
 async function fetchReportData() {
@@ -41,6 +41,7 @@ async function fetchSessionData() {
     });
 
     if (!response.ok) {
+      console.error(`HTTP error! status: ${response.status}`);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
@@ -232,23 +233,26 @@ function updateUI(reportData, sessionData) {
 }
 
 // 에러 상태 UI 표시
-async function initializeDashboard() {
-  console.log("대시보드 초기화 시작");
+function showErrorState() {
+  const scoreElement = document.querySelector(".highlight");
+  const statusElement = document.querySelector(".header p");
 
-  showLoadingState();
+  if (scoreElement) {
+    scoreElement.textContent = "0점";
+  }
 
-  try {
-    const sessionIds = [1, 2, 3, 4, 5]; // 실제 세션 ID 목록
-    const heatmapData = await fetchHeatmapDataFromAPI(
-      sessionIds
-    );
+  if (statusElement) {
+    statusElement.textContent =
+      "데이터를 불러올 수 없습니다. 새로고침해주세요.";
+  }
 
-    console.log("히트맵 데이터 로드 완료:", heatmapData);
-
-    generateHeatmap(heatmapData);
-  } catch (error) {
-    console.error("대시보드 초기화 실패:", error);
-    showErrorState();
+  const studyTimeElement =
+    document.querySelector(".circle-chart");
+  if (studyTimeElement) {
+    studyTimeElement.innerHTML = `
+      ❌ 데이터 로드 실패<br>
+      다시 시도해주세요
+    `;
   }
 }
 
@@ -269,7 +273,7 @@ function showLoadingState() {
     document.querySelector(".circle-chart");
   if (studyTimeElement) {
     studyTimeElement.innerHTML = `
-      로딩 중...<br>
+      ⏳ 로딩 중...<br>
       잠시만 기다려주세요
     `;
   }
@@ -439,43 +443,20 @@ function generateMockStudyData() {
 }
 
 // API에서 히트맵 데이터 가져오기 (향후 구현)
-async function fetchHeatmapDataFromAPI(sessionIds) {
-  const heatmapData = {};
+async function fetchHeatmapData() {
+  try {
+    // 실제 API 호출로 교체 예정
+    // const response = await fetch(`${API_BASE_URL}/heatmap`, {
+    //   headers: { Authorization: `Bearer ${TOKEN}` }
+    // });
+    // return await response.json();
 
-  for (const sessionId of sessionIds) {
-    const url = `${API_BASE_URL}/v1/study-sessions/${sessionId}`;
-    console.log("API 호출 URL:", url); // 디버깅 로그 추가
-    console.log("사용 중인 토큰:", TOKEN); // 디버깅 로그 추가
-
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    console.log("API 응답 상태 코드:", response.status); // 응답 상태 코드 확인
-
-    if (response.ok) {
-      const data = await response.json();
-      if (data.isSuccess && data.result.startedAt) {
-        const sessionDate = new Date(data.result.startedAt);
-        const dateStr = sessionDate.toISOString().split("T")[0];
-        const sessionMinutes = Math.floor(
-          data.result.sessionSeconds / 60
-        );
-
-        // 날짜별 학습 시간 누적
-        heatmapData[dateStr] =
-          (heatmapData[dateStr] || 0) + sessionMinutes;
-      }
-    } else {
-      console.error(`API 호출 실패: ${response.status}`);
-    }
+    // 현재는 모의 데이터 사용
+    return generateMockStudyData();
+  } catch (error) {
+    console.error("히트맵 데이터 로드 실패:", error);
+    return {};
   }
-
-  return heatmapData;
 }
 
 // 기존 initializeDashboard 함수 수정
@@ -485,13 +466,26 @@ async function initializeDashboard() {
   showLoadingState();
 
   try {
-    const sessionIds = [1, 2, 3, 4, 5]; // 실제 세션 ID 목록
-    const heatmapData = await fetchHeatmapDataFromAPI(
-      sessionIds
-    );
+    const [reportData, sessionData, heatmapData] =
+      await Promise.all([
+        fetchReportData(),
+        fetchSessionData(),
+        fetchHeatmapData(),
+      ]);
 
-    console.log("히트맵 데이터 로드 완료:", heatmapData);
+    console.log("데이터 로드 완료:", {
+      reportData,
+      sessionData,
+      heatmapData,
+    });
 
+    if (reportData) {
+      updateUI(reportData, sessionData);
+    } else {
+      showErrorState();
+    }
+
+    // 히트맵 생성
     generateHeatmap(heatmapData);
   } catch (error) {
     console.error("대시보드 초기화 실패:", error);
@@ -549,13 +543,15 @@ async function fetchSessionData() {
   }
 }
 
-const QUOTE_API_URL = "https://example.com/api/v1/quotes"; // API URL을 여기에 입력하세요
-
+// 명언 데이터 가져오기 함수
 async function fetchQuote() {
   try {
-    const response = await fetch(QUOTE_API_URL, {
+    const url = `${API_BASE_URL}/quotes/today`;
+
+    const response = await fetch(url, {
       method: "GET",
       headers: {
+        Authorization: `Bearer ${TOKEN}`,
         "Content-Type": "application/json",
       },
     });
@@ -565,13 +561,16 @@ async function fetchQuote() {
     }
 
     const data = await response.json();
-    return data.comment; // API 응답에서 명언 추출
+    return data.isSuccess
+      ? data.result
+      : "명언을 불러올 수 없습니다.";
   } catch (error) {
     console.error("명언 데이터 로드 실패:", error);
-    return "명언을 불러오는 데 실패했습니다.";
+    return "명언을 불러올 수 없습니다.";
   }
 }
 
+// 명언 UI 업데이트 함수
 async function updateQuote() {
   const quoteElement = document.getElementById("quote-comment");
   if (quoteElement) {
@@ -580,7 +579,89 @@ async function updateQuote() {
   }
 }
 
-// 페이지 로드 시 명언 업데이트
+// 페이지 로드 시 명언 초기화
 document.addEventListener("DOMContentLoaded", function () {
   updateQuote();
+});
+
+async function fetchStudySession(sessionId) {
+  try {
+    const url = `${API_BASE_URL}/v1/study-sessions/${sessionId}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      console.error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.isSuccess ? data.result : null;
+  } catch (error) {
+    console.error(
+      `세션 데이터 로드 실패 (ID: ${sessionId}):`,
+      error
+    );
+    return null;
+  }
+}
+
+// 히트맵 업데이트 함수
+async function updateHeatmapForSession(sessionId) {
+  const sessionData = await fetchStudySession(sessionId);
+
+  if (sessionData && sessionData.startedAt) {
+    const startedDate = new Date(sessionData.startedAt);
+    const dateStr = startedDate.toISOString().split("T")[0];
+
+    const heatmapCell = document.querySelector(
+      `.heatmap-cell[data-date="${dateStr}"]`
+    );
+
+    if (heatmapCell) {
+      const focusMinutes = Math.floor(
+        sessionData.focusSeconds / 60
+      );
+      let level = 0;
+
+      if (focusMinutes > 0) {
+        if (focusMinutes >= 240) level = 4; // 4시간 이상
+        else if (focusMinutes >= 120) level = 3; // 2시간 이상
+        else if (focusMinutes >= 60) level = 2; // 1시간 이상
+        else level = 1; // 1시간 미만
+      }
+
+      heatmapCell.setAttribute("data-level", level);
+      heatmapCell.setAttribute("data-minutes", focusMinutes);
+      heatmapCell.style.backgroundColor = getHeatmapColor(level);
+    }
+  }
+}
+
+// 히트맵 색상 반환 함수
+function getHeatmapColor(level) {
+  switch (level) {
+    case 4:
+      return "#4caf50"; // 매우 집중
+    case 3:
+      return "#8bc34a"; // 집중
+    case 2:
+      return "#cddc39"; // 보통
+    case 1:
+      return "#ffc107"; // 낮음
+    default:
+      return "#e0e0e0"; // 없음
+  }
+}
+
+// 페이지 로드 시 특정 세션 히트맵 업데이트
+document.addEventListener("DOMContentLoaded", async function () {
+  const sessionId = 5; // 업데이트할 세션 ID (예시)
+  await updateHeatmapForSession(sessionId);
 });

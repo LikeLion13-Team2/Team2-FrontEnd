@@ -363,7 +363,7 @@ function sendStudySession() {
   };
 
   const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNDI4MjYsImV4cCI6MTc1MjI2NDQyNn0.BR0_UWtQUqMsrO0VMDuUf7Hw-tNMw2oak35olCgg8_g";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNDI4MjYsImV4cCI6MTc1MjI2NDQyNn0.BR0_UWtQUqMsrO0VMDuUf7Hw-tNMw2oak35olCgg8_geyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
 
   fetch("https://focuscoach.click/api/v1/study-sessions", {
     method: "POST",

@@ -1,6 +1,6 @@
 const API_BASE_URL = "https://focuscoach.click/api";
 const TOKEN =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyMzk4NDYsImV4cCI6MTc1MjI2MTQ0Nn0.BHXn1uxPnEjvUMcCoPGpU9Nn_je6v85C1gwm3Ut9Egg";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
 
 // 현재 선택된 기간 타입
 let currentPeriodType = "DAY_1";
