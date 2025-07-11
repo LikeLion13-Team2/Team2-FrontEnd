@@ -201,17 +201,17 @@ function updateUI(reportData, sessionData) {
         (reportData.totalSessionSeconds % 3600) / 60
       );
       studyStatsElement.innerHTML = `
-        📚 오늘 학습: ${totalHours}시간 ${totalMinutes}분 | 
+        📚 오늘 학습: ${totalHours}시간 ${totalMinutes}분 |
         ⏰ 집중 시간: ${formatTime(
           reportData.totalFocusSeconds
-        )} | 
+        )} |
         📝 집중률: ${
           Math.round(
             (reportData.totalFocusSeconds /
               reportData.totalSessionSeconds) *
               100
           ) || 0
-        }% | 
+        }% |
         🏆 평균 점수: ${Math.round(
           reportData.avgFocusScore * 100
         )}점
@@ -562,3 +562,93 @@ async function fetchSessionData() {
     return [];
   }
 }
+
+// const API_BASE_URL = "https://focuscoach.click/api";
+// const TOKEN =
+//   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyMzk4NDYsImV4cCI6MTc1MjI2MTQ0Nn0.BHXn1uxPnEjvUMcCoPGpU9Nn_je6v85C1gwm3Ut9Egg";
+
+// // 히트맵 데이터 생성 함수
+// async function generateHeatmapDataFromAPI(sessionIds) {
+//   const heatmapData = {};
+
+//   for (const sessionId of sessionIds) {
+//     const url = `${API_BASE_URL}/v1/study-sessions/${sessionId}`;
+//     const response = await fetch(url, {
+//       method: "GET",
+//       headers: {
+//         Authorization: `Bearer ${TOKEN}`,
+//         "Content-Type": "application/json",
+//       },
+//     });
+
+//     if (response.ok) {
+//       const data = await response.json();
+//       if (data.isSuccess && data.result.startedAt) {
+//         const sessionDate = new Date(data.result.startedAt);
+//         const dateStr = sessionDate.toISOString().split("T")[0];
+//         const sessionMinutes = Math.floor(
+//           data.result.sessionSeconds / 60
+//         );
+
+//         heatmapData[dateStr] =
+//           (heatmapData[dateStr] || 0) + sessionMinutes;
+//       }
+//     }
+//   }
+
+//   return heatmapData;
+// }
+
+// // 히트맵 생성 함수
+// function generateHeatmap(studyData = {}) {
+//   const heatmapGrid = document.getElementById("heatmap-grid");
+//   if (!heatmapGrid) return;
+
+//   const today = new Date();
+//   const oneYearAgo = new Date(today);
+//   oneYearAgo.setFullYear(today.getFullYear() - 1);
+
+//   const startDate = new Date(oneYearAgo);
+//   while (startDate.getDay() !== 0) {
+//     startDate.setDate(startDate.getDate() - 1);
+//   }
+
+//   const currentDate = new Date(startDate);
+//   for (let week = 0; week < 53; week++) {
+//     for (let day = 0; day < 7; day++) {
+//       const dateStr = currentDate.toISOString().split("T")[0];
+//       const studyMinutes = studyData[dateStr] || 0;
+
+//       let level = 0;
+//       if (studyMinutes > 0) {
+//         if (studyMinutes >= 240) level = 4;
+//         else if (studyMinutes >= 120) level = 3;
+//         else if (studyMinutes >= 60) level = 2;
+//         else level = 1;
+//       }
+
+//       const cell = document.createElement("div");
+//       cell.className = "heatmap-cell";
+//       cell.setAttribute("data-level", level);
+//       cell.setAttribute("data-date", dateStr);
+//       cell.setAttribute("data-minutes", studyMinutes);
+
+//       heatmapGrid.appendChild(cell);
+//       currentDate.setDate(currentDate.getDate() + 1);
+//     }
+//   }
+// }
+
+// // 초기화 함수
+// async function initializeDashboard() {
+//   const sessionIds = [1, 2, 3, 4, 5];
+//   const heatmapData = await generateHeatmapDataFromAPI(
+//     sessionIds
+//   );
+//   generateHeatmap(heatmapData);
+// }
+
+// document.addEventListener(
+//   "DOMContentLoaded",
+//   initializeDashboard
+// );
