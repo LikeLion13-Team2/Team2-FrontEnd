@@ -31,13 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- 초기 사용자 프로필 로딩 함수 ---
   const fetchUserProfile = async () => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      alert("로그인이 필요합니다. 다시 로그인해주세요.");
-      // 로그인 페이지 URL은 실제 경로에 맞게 수정해주세요.
-      window.location.href = "/pages/loginpage.html";
-      return;
-    }
+    const token =
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
 
     try {
       // 백엔드에서 사용자 프로필을 불러오는 GET API
@@ -45,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://focuscoach.click/api/members/me",
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -64,27 +59,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // 공부 목표 필드 채우기 (선택된 태그 활성화)
-      if (userData.goalName) {
-        let goalsToActivate = [];
-        if (Array.isArray(userData.goalName)) {
-          // 백엔드에서 goalName이 이미 배열로 온 경우
-          goalsToActivate = userData.goalName.map((goal) =>
-            goal.trim()
-          );
-        } else if (typeof userData.goalName === "string") {
-          // 백엔드에서 goalName이 콤마로 구분된 문자열로 온 경우 (예: "대입,내신/학점")
-          goalsToActivate = userData.goalName
-            .split(",")
-            .map((goal) => goal.trim());
-        }
-
+      if (userData.goals && Array.isArray(userData.goals)) {
         // 모든 버튼의 'selected' 클래스 초기화 (중복 활성화 방지)
         tagButtons.forEach((btn) =>
           btn.classList.remove("selected")
         );
 
-        // 불러온 목표에 따라 해당 버튼 활성화
-        goalsToActivate.forEach((goalText) => {
+        // goals 배열에서 각 객체의 goalName을 추출하여 해당 버튼 활성화
+        userData.goals.forEach((goalObj) => {
+          const goalText = goalObj.goalName.trim();
           tagButtons.forEach((btn) => {
             const buttonText = btn.textContent.trim();
             // 버튼 텍스트와 불러온 목표 텍스트가 정확히 일치하면 'selected' 클래스 추가
@@ -117,22 +100,22 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       // 편집 완료, 백엔드 전송
       const newName = nicknameInput.value.trim();
-      const accessToken = localStorage.getItem("accessToken");
 
-      if (!accessToken) {
-        alert("로그인 정보가 없습니다. 다시 로그인해주세요.");
-        window.location.href = "/pages/loginpage.html"; // 로그인 페이지 URL은 실제 경로에 맞게 수정
+      if (!newName) {
+        alert("닉네임을 입력해주세요.");
         return;
       }
 
       try {
-        // PATCH 요청으로 닉네임 업데이트
-        await axios.patch(
+        // PUT 요청으로 닉네임 업데이트
+        const token =
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
+        await axios.put(
           "https://focuscoach.click/api/members/name", // 닉네임 업데이트 API 엔드포인트
           { newName: newName }, // 백엔드가 'newName'이라는 키를 기대합니다.
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`, // Access Token 포함
+              Authorization: `Bearer ${token}`, // 제공받은 토큰 사용
               "Content-Type": "application/json", // JSON 형식으로 데이터 전송 명시
             },
           }
@@ -167,23 +150,19 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".tag-button.selected")
       ).map((btn) => btn.textContent.trim()); // 현재 선택된 태그들의 텍스트를 배열로 가져옴
 
-      const accessToken = localStorage.getItem("accessToken");
-
-      if (!accessToken) {
-        alert("로그인 정보가 없습니다. 다시 로그인해주세요.");
-        window.location.href = "pages/loginpage.html"; // 로그인 페이지 URL은 실제 경로에 맞게 수정
-        return;
-      }
+      // 선택된 목표들을 콤마로 구분된 문자열로 변환
+      const goalNamesString = selectedGoals.join(",");
 
       try {
-        // 중요: 이 PUT 요청의 'goalName' 필드가 '배열'을 받는지, 아니면 '콤마 구분 문자열'을 받는지
-        // 백엔드에 확인해야 합니다. 현재 코드는 '배열'을 보내도록 되어 있습니다.
+        // PUT 요청으로 공부 목표 업데이트
+        const token =
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
         await axios.put(
           "https://focuscoach.click/api/members/goals", // 공부 목표 업데이트 API 엔드포인트
-          { goalName: selectedGoals }, // selectedGoals는 배열 (예: ["대입", "내신"])
+          { goalNames: goalNamesString }, // API 문서에 따라 goalNames 필드에 콤마로 구분된 문자열 전송
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`, // Access Token 포함
+              Authorization: `Bearer ${token}`, // 제공받은 토큰 사용
               "Content-Type": "application/json", // JSON 형식으로 데이터 전송 명시
             },
           }
@@ -222,4 +201,118 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // DOMContentLoaded 이벤트 발생 시, 사용자 프로필 정보 불러오는 함수 호출
   fetchUserProfile();
+
+  // === 로그아웃 이벤트 리스너 ===
+  const logoutLink = document.querySelector(
+    ".footer-links a:nth-child(3)"
+  ); // "로그아웃" 링크 선택
+  if (
+    logoutLink &&
+    logoutLink.textContent.includes("로그아웃")
+  ) {
+    logoutLink.addEventListener("click", async (e) => {
+      e.preventDefault(); // 기본 링크 동작 방지
+
+      const confirmed = confirm("로그아웃 하시겠습니까?");
+      if (!confirmed) return;
+
+      try {
+        // 로그아웃 API 호출
+        const token =
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
+
+        await axios.delete(
+          "https://focuscoach.click/api/members/logout",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // localStorage에서 토큰 제거
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+
+        alert("로그아웃되었습니다.");
+
+        // index.html로 리다이렉트
+        window.location.href = "/index.html";
+      } catch (error) {
+        console.error(
+          "로그아웃 실패:",
+          error.response?.data || error
+        );
+
+        // API 호출이 실패해도 로컬에서는 로그아웃 처리
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+
+        alert(
+          "로그아웃 처리 중 오류가 발생했지만, 로컬에서 로그아웃됩니다."
+        );
+        window.location.href = "/index.html";
+      }
+    });
+  }
+
+  // === 회원 탈퇴 이벤트 리스너 ===
+  const deleteAccountLink = document.querySelector(
+    ".footer-links a.danger"
+  ); // "회원 탈퇴" 링크 선택
+  if (
+    deleteAccountLink &&
+    deleteAccountLink.textContent.includes("회원 탈퇴")
+  ) {
+    deleteAccountLink.addEventListener("click", async (e) => {
+      e.preventDefault(); // 기본 링크 동작 방지
+
+      const confirmed = confirm(
+        "정말로 회원 탈퇴하시겠습니까?\n\n탈퇴 시 모든 데이터가 삭제되며 복구할 수 없습니다."
+      );
+      if (!confirmed) return;
+
+      // 두 번째 확인
+      const doubleConfirmed = confirm(
+        "정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+      );
+      if (!doubleConfirmed) return;
+
+      try {
+        // 회원 탈퇴 API 호출
+        const token =
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
+
+        await axios.delete(
+          "https://focuscoach.click/api/members/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // localStorage에서 모든 사용자 데이터 제거
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.clear(); // 모든 localStorage 데이터 삭제
+
+        alert(
+          "회원 탈퇴가 완료되었습니다. 그동안 이용해 주셔서 감사합니다."
+        );
+
+        // index.html로 리다이렉트
+        window.location.href = "/index.html";
+      } catch (error) {
+        console.error(
+          "회원 탈퇴 실패:",
+          error.response?.data || error
+        );
+        alert(
+          "회원 탈퇴 처리 중 오류가 발생했습니다: " +
+            (error.response?.data?.message || error.message)
+        );
+      }
+    });
+  }
 });

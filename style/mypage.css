@@ -232,6 +232,15 @@ body {
   color: #999;
 }
 
+/* disabled 상태이면서 selected인 버튼은 파란색 유지 */
+.tag-button:disabled.selected {
+  background-color: #e8f0fe;
+  border-color: #4285f4;
+  color: #4285f4;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
 .tag-button.selected-disabled {
   background-color: #b0b0b0; /* 탁한 회색 느낌 */
   color: white;
