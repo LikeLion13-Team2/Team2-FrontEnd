@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-/*기본 데스크톱*/
+/* 데스크톱 스타일 */
 .wrapper {
   display: flex;
   align-items: center;
@@ -32,11 +32,10 @@
   align-items: center;
   height: 400px;
   justify-content: flex-start;
-  margin-top: 50px;
 }
 
 .image-box img {
-  margin-bottom: 10px; /*조절*/
+  margin-bottom: 10px;
 }
 
 .text-box {
@@ -58,8 +57,7 @@
   line-height: 1.5;
 }
 
-/*Media Query*/
-/*창 줄일 때*/
+/* 모바일 반응형 */
 @media (max-width: 1000px) {
   .wrapper {
     justify-content: center;
