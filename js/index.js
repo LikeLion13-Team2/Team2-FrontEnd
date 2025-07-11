@@ -269,7 +269,7 @@ function showLoadingState() {
     document.querySelector(".circle-chart");
   if (studyTimeElement) {
     studyTimeElement.innerHTML = `
-      ⏳ 로딩 중...<br>
+      로딩 중...<br>
       잠시만 기다려주세요
     `;
   }

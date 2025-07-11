@@ -156,13 +156,13 @@ body {
 }
 
 .card h3::before {
-  content: "📚";
+  /* content: "📚"; */
   font-size: 20px;
 }
 
-.card:nth-child(2) h3::before {
+/* .card:nth-child(2) h3::before {
   content: "⏰";
-}
+} */
 
 .card p {
   color: #666;
@@ -195,7 +195,7 @@ body {
 }
 
 .circle-chart::before {
-  content: "📊";
+  /* content: "📊"; */
   position: absolute;
   top: 20px;
   right: 20px;
