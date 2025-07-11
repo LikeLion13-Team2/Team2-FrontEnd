@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>공부페이지</title>
+    <link rel="stylesheet" href="/style/layout.css" />
+    <link rel="stylesheet" href="/style/study.css" />
+    <script src="/js/renderSidebar.js"></script>
+    <script src="/libs/chart.umd.js"></script>
+    <script src="/libs/webgazer.js"></script>
+  </head>
+  <body>
+    <div class="main step step-2">
+      <div class="timer-container">
+        <div class="circle">
+          <svg class="progress-ring" width="120" height="120">
+            <circle class="ring-bg" cx="100" cy="100" r="80" />
+            <circle
+              class="ring-progress"
+              cx="100"
+              cy="100"
+              r="80"
+            />
+          </svg>
+          <div class="circle-inner">
+            <span id="time-text">20분</span>
+          </div>
+        </div>
+
+        <div class="side-controls">
+          <div class="timer-controls">
+            <div class="starting-controls">
+              <div class="duration-control">
+                <button id="minus">–</button>
+                <input
+                  type="number"
+                  id="minutes"
+                  min="1"
+                  value="20"
+                />분
+                <button id="plus">+</button>
+              </div>
+            </div>
+            <div class="timer-btn">
+              <button class="start-btn">▶ 시작</button>
+              <button class="reset-btn">⏹ 완료</button>
+            </div>
+          </div>
+          <div class="focus-text" style="display: none">
+            <p>시선 좌표: <span id="gaze">-</span></p>
+            <p>딴짓 여부: <span id="drowsy">-</span></p>
+            <p>집중도 점수: <span id="score">0.00</span></p>
+            <p>
+              누적 집중 시간: <span id="focusTime">00:00</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="note">
+          필기시간도 딴짓시간으로 측정될 수 있으니, 일시정지
+          하시고 필기하시는 것을 추천합니다.<br />
+          필기감지기능은 추후 개발예정입니다
+        </p>
+      </div>
+
+      <canvas
+        id="canvas"
+        width="640"
+        height="480"
+        style="display: none"
+      ></canvas>
+
+      <div class="focus-info" style="display: none">
+        <canvas
+          id="scoreChart"
+          width="400"
+          height="150"
+        ></canvas>
+        <div
+          id="scoreBar"
+          style="
+            height: 10px;
+            background: #00c853;
+            width: 0%;
+            margin-top: 5px;
+          "
+        ></div>
+      </div>
+    </div>
+    <script src="/js/popup.js"></script>
+    <script src="/js/get.js"></script>
+  </body>
+</html>

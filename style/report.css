@@ -1,0 +1,715 @@
+/* 전체 배경 및 기본 스타일 */
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont,
+    system-ui, sans-serif;
+}
+
+.main {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 32px;
+  margin: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+/* 헤더 스타일 */
+.header {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 32px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  position: relative;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+/* 요약 섹션 스타일 */
+.summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.summary .left,
+.summary .right {
+  flex: 1;
+}
+
+/* 한줄 총평 카드 스타일 */
+.focus-type-card,
+.comment-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  color: black;
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.focus-type-card::before,
+.comment-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.focus-type-card:hover::before,
+.comment-card:hover::before {
+  transform: translateX(100%);
+}
+
+.focus-type-card:hover,
+.comment-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+}
+
+.focus-type-header,
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.focus-type-label,
+.comment-label {
+  font-weight: 600;
+  font-size: 14px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.focus-type-value {
+  background: rgba(146, 146, 146, 0.25);
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.comment-icon {
+  font-size: 24px;
+  animation: bounce 2s infinite;
+}
+
+/* 점수 뱃지 스타일 - 기본 */
+.score-badge {
+  padding: 6px 16px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+/* Bad 점수 (0-33점) */
+.score-badge.score-badge-bad {
+  background: linear-gradient(
+    45deg,
+    #ff6b6b,
+    #ee5a52
+  ) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Normal 점수 (34-66점) */
+.score-badge.score-badge-normal {
+  background: linear-gradient(
+    45deg,
+    #ffa726,
+    #ff9800
+  ) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(255, 167, 38, 0.3) !important;
+}
+
+/* Good 점수 (67-100점) */
+.score-badge.score-badge-good {
+  background: linear-gradient(
+    45deg,
+    #4caf50,
+    #45a049
+  ) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+}
+
+/* 호버 효과 */
+.score-badge:hover {
+  transform: scale(1.05);
+}
+
+/* 기본 score-badge 스타일 제거 (중복 방지) */
+.score-display .score-badge {
+  background: none;
+  box-shadow: none;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+.focus-type-description,
+.comment-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.95;
+  font-weight: 400;
+}
+
+/* 탭 스타일 */
+.tabs {
+  margin: 32px 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.tabs button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  backdrop-filter: blur(10px);
+  border: 2px solid transparent;
+}
+
+.tabs button:hover {
+  background: rgba(79, 154, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.tabs button.active {
+  background: linear-gradient(45deg, #4f9aff, #667eea);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(79, 154, 255, 0.3);
+}
+
+/* 카드 스타일 */
+.cards {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+  color: #4f9aff;
+  font-size: 36px;
+  margin: 16px 0;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(79, 154, 255, 0.1);
+}
+
+.card h4 {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+/* 점수 섹션 스타일 */
+.score-section,
+.study-time-section {
+  text-align: center;
+}
+
+.score-display,
+.time-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.score-badge {
+  background: linear-gradient(45deg, #4caf50, #45a049);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.time-icon {
+  font-size: 28px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.divider {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(79, 154, 255, 0.3),
+    transparent
+  );
+  margin: 28px 0;
+  border-radius: 1px;
+}
+
+.score-comparison,
+.time-comparison {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* 통계 카드 스타일 */
+.stats-card {
+  background: linear-gradient(
+    135deg,
+    rgba(245, 247, 250, 0.9) 0%,
+    rgba(195, 207, 226, 0.9) 100%
+  );
+  backdrop-filter: blur(20px);
+}
+
+.stats-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(79, 154, 255, 0.2);
+  position: relative;
+}
+
+.stats-header::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(45deg, #4f9aff, #667eea);
+}
+
+.stats-header h4 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(45deg, #4f9aff, #667eea);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.stat-item:hover::after {
+  transform: scaleX(1);
+}
+
+.stat-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* 포커스 상태별 아이콘 추가 */
+.stat-item.focus::before {
+  content: "⏱️";
+}
+.stat-item.break::before {
+  content: "⏱️";
+}
+.stat-item.distraction::before {
+  content: "⏱️";
+}
+.stat-item.longest::before {
+  content: "⏱️";
+}
+.stat-item.average::before {
+  content: "📊";
+}
+
+.stat-item::before {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 12px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* 그래프 섹션 스타일 */
+.graph-section {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 28px;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.graph-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.graph-section h3 {
+  color: #333;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.graph-placeholder,
+.chart-placeholder {
+  height: 200px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  margin-top: 16px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-weight: 600;
+  font-size: 16px;
+  border: 2px dashed rgba(79, 154, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.graph-placeholder:hover,
+.chart-placeholder:hover {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-color: rgba(79, 154, 255, 0.5);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .main {
+    margin: 10px;
+    padding: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .cards {
+    flex-direction: column;
+  }
+
+  /* ...existing code... */
+
+  /* 점수 섹션 스타일 - 상세 통계와 비슷하게 변경 */
+  .card {
+    flex: 1;
+    background: linear-gradient(
+      135deg,
+      rgba(245, 247, 250, 0.9) 0%,
+      rgba(195, 207, 226, 0.9) 100%
+    );
+    padding: 28px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .score-section,
+  .study-time-section {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .score-section::before {
+    content: "🎯";
+    display: block;
+    font-size: 24px;
+    margin-bottom: 12px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .study-time-section::before {
+    content: "📚";
+    display: block;
+    font-size: 24px;
+    margin-bottom: 12px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .score-section::after,
+  .study-time-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(45deg, #4f9aff, #667eea);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .score-section:hover::after,
+  .study-time-section:hover::after {
+    transform: scaleX(1);
+  }
+
+  .score-section:hover,
+  .study-time-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .score-section h4,
+  .study-time-section h4 {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .score-display,
+  .time-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .card h2 {
+    color: #4f9aff;
+    font-size: 28px;
+    margin: 8px 0;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(79, 154, 255, 0.1);
+  }
+
+  .score-badge {
+    background: linear-gradient(45deg, #4caf50, #45a049);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 25px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  }
+
+  .time-icon {
+    font-size: 28px;
+    animation: pulse 2s infinite;
+  }
+
+  .divider {
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(79, 154, 255, 0.3),
+      transparent
+    );
+    margin: 16px 0;
+    border-radius: 1px;
+  }
+
+  .score-comparison,
+  .time-comparison {
+    color: #666;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+    margin-top: 8px;
+    opacity: 0.8;
+  }
+
+  /* ...existing code... */
+
+  .score-display,
+  .time-display {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .header {
+    font-size: 24px;
+  }
+}
+
+/* 스크롤바 스타일 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #764ba2, #667eea);
+}

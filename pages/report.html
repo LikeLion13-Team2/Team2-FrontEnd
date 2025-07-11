@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>AI 분석 리포트</title>
+    <link rel="stylesheet" href="../style/report.css" />
+    <link rel="stylesheet" href="../style/layout.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/renderSidebar.js" defer></script>
+    <script src="/js/report.js" defer></script>
+  </head>
+  <body>
+    <!-- 사이드바 renderSidebar.js -->
+    <div class="main">
+      <div class="header">AI 분석 리포트</div>
+
+      <div class="tabs">
+        <button class="active">1일</button>
+        <button>3일</button>
+        <button>7일</button>
+      </div>
+
+      <div class="summary">
+        <div class="left">
+          <div class="focus-type-card">
+            <div class="focus-type-header">
+              <span class="focus-type-label"
+                >오늘의 집중 유형</span
+              >
+              <span class="focus-type-value"
+                >🐢 루틴형 (거북이)</span
+              >
+            </div>
+            <p class="focus-type-description">
+              평균 집중 점수가 높고 누적 공부 시간이 많은 것으로
+              보아 안정적으로 학습하는 습관을 가지고 계신 것으로
+              판단됩니다.
+            </p>
+          </div>
+        </div>
+        <div class="right">
+          <div class="comment-card">
+            <div class="comment-header">
+              <span class="comment-icon">🤖</span>
+              <span class="comment-label">포코의 한줄 총평</span>
+            </div>
+            <p class="comment-text poco-comment">
+              평균 집중력이 높아 효율적인 학습이 가능하며, 루틴을
+              중시하면서 꾸준한 학습이 중요해요. 💪🌟
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="score-section">
+            <h4>나의 평균 집중 점수</h4>
+            <div class="score-display">
+              <h2>67점</h2>
+              <div class="score-badge score-badge-good">
+                Good!
+              </div>
+            </div>
+            <small class="score-comparison">
+              어제보다 1점 더 높아요!<br />최고 점수는
+              80점이었어요
+            </small>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="study-time-section">
+            <h4>나의 공부시간</h4>
+            <div class="time-display">
+              <h2>5시간 23분</h2>
+            </div>
+            <small class="time-comparison"
+              >어제보다 1시간 12분 더 공부했어요!</small
+            >
+          </div>
+        </div>
+
+        <div class="card stats-card">
+          <div class="stats-header">
+            <h4>상세 통계</h4>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-item focus">
+              <div class="stat-label">누적 집중 시간</div>
+              <div class="stat-value">
+                <span style="color: #4f9aff; font-weight: bold"
+                  >90분</span
+                >
+              </div>
+            </div>
+
+            <div class="stat-item break">
+              <div class="stat-label">쉬는 시간</div>
+              <div class="stat-value">
+                <span style="color: #4f9aff; font-weight: bold"
+                  >20분</span
+                >
+              </div>
+            </div>
+
+            <div class="stat-item distraction">
+              <div class="stat-label">딴짓 누적 시간</div>
+              <div class="stat-value">
+                <span style="color: #ff6b6b; font-weight: bold"
+                  >20분</span
+                >
+              </div>
+            </div>
+
+            <div class="stat-item longest">
+              <div class="stat-label">최장 집중 시간</div>
+              <div class="stat-value">
+                <span style="color: #4f9aff; font-weight: bold"
+                  >42분</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="graph-section">
+        <h3>집중 점수 그래프</h3>
+        <canvas
+          id="focusChart"
+          style="max-height: 200px"
+        ></canvas>
+        <h3 style="margin-top: 20px">
+          집중 피크 타임
+          <span style="color: #4f9aff">13:00 - 14:00</span>
+        </h3>
+      </div>
+
+      <div
+        class="graph-section"
+        style="margin-top: 20px; display: flex; gap: 10px"
+      >
+        <div style="width: 50%">
+          <h4>요일별 활동 분석</h4>
+          <canvas
+            id="weeklyChart"
+            style="max-height: 200px"
+          ></canvas>
+        </div>
+        <div style="width: 50%">
+          <h4>주요 공부시간</h4>
+          <canvas
+            id="timeChart"
+            style="max-height: 200px"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 집중 점수 그래프 (라인 차트)
+      const focusCtx = document
+        .getElementById("focusChart")
+        .getContext("2d");
+      const focusChart = new Chart(focusCtx, {
+        type: "line",
+        data: {
+          labels: ["월", "화", "수", "목", "금", "토", "일"],
+          datasets: [
+            {
+              label: "집중 점수",
+              data: [85, 72, 65, 70, 78, 82, 75],
+              borderColor: "#4f9aff",
+              backgroundColor: "rgba(79, 154, 255, 0.1)",
+              borderWidth: 3,
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: "#4f9aff",
+              pointBorderColor: "#ffffff",
+              pointBorderWidth: 2,
+              pointRadius: 6,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              grid: {
+                color: "rgba(0,0,0,0.1)",
+              },
+            },
+            x: {
+              grid: {
+                display: false,
+              },
+            },
+          },
+        },
+      });
+
+      // 요일별 활동 분석 (적층 막대 차트)
+      const weeklyCtx = document
+        .getElementById("weeklyChart")
+        .getContext("2d");
+      const weeklyChart = new Chart(weeklyCtx, {
+        type: "bar",
+        data: {
+          labels: ["월", "화", "수", "목", "금", "토", "일"],
+          datasets: [
+            {
+              label: "집중",
+              data: [120, 100, 80, 140, 160, 90, 70],
+              backgroundColor: "#4f9aff",
+            },
+            {
+              label: "쉬는 시간",
+              data: [30, 25, 20, 35, 40, 25, 20],
+              backgroundColor: "#ffa726",
+            },
+            {
+              label: "딴짓",
+              data: [20, 15, 25, 30, 20, 15, 10],
+              backgroundColor: "#ef5350",
+            },
+            {
+              label: "기타",
+              data: [10, 20, 15, 25, 20, 10, 5],
+              backgroundColor: "#66bb6a",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+          scales: {
+            x: {
+              stacked: true,
+              grid: {
+                display: false,
+              },
+            },
+            y: {
+              stacked: true,
+              grid: {
+                color: "rgba(0,0,0,0.1)",
+              },
+            },
+          },
+        },
+      });
+
+      // 주요 공부시간 (도넛 차트)
+      const timeCtx = document
+        .getElementById("timeChart")
+        .getContext("2d");
+      const timeChart = new Chart(timeCtx, {
+        type: "doughnut",
+        data: {
+          labels: [
+            "09:00-12:00",
+            "13:00-16:00",
+            "16:00-19:00",
+            "19:00-22:00",
+            "기타",
+          ],
+          datasets: [
+            {
+              data: [25, 35, 15, 20, 5],
+              backgroundColor: [
+                "#4f9aff",
+                "#ffa726",
+                "#ef5350",
+                "#66bb6a",
+                "#ab47bc",
+              ],
+              borderWidth: 0,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                usePointStyle: true,
+                padding: 15,
+                font: {
+                  size: 10,
+                },
+              },
+            },
+          },
+          cutout: "60%",
+        },
+      });
+    </script>
+  </body>
+</html>

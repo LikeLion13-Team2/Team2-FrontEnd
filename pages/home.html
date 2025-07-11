@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>학습 대시보드</title>
+    <link rel="stylesheet" href="/style/home.css" />
+    <link rel="stylesheet" href="/style/layout.css" />
+    <script src="/js/renderSidebar.js" defer></script>
+    <script src="/js/index.js" defer></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">
+        <h1>오늘의 학습 현황</h1>
+        <div class="score">
+          <span class="highlight">95점</span>집중력 최고
+        </div>
+        <p>시선 안정적, 졸음 없음, 자세 93% 유지 중</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>오늘의 명언</h3>
+          <p id="quote-comment">명언을 불러오는 중...</p>
+        </div>
+        <div class="card">
+          <h3>오늘 공부 시간</h3>
+          <div class="circle-chart">
+            오늘의 학습 시간을<br />원형 차트로 표시
+          </div>
+        </div>
+      </div>
+
+      <div class="calendar">
+        <h3>연간 학습 현황</h3>
+        <div class="heatmap-container">
+          <div class="heatmap-months">
+            <span>Aug</span>
+            <span>Sep</span>
+            <span>Oct</span>
+            <span>Nov</span>
+            <span>Dec</span>
+            <span>Jan</span>
+            <span>Feb</span>
+            <span>Mar</span>
+            <span>Apr</span>
+            <span>May</span>
+            <span>Jun</span>
+            <span>Jul</span>
+          </div>
+          <div class="heatmap-content">
+            <div class="heatmap-grid" id="heatmap-grid">
+              <!-- JavaScript로 생성될 예정 -->
+            </div>
+          </div>
+          <div class="heatmap-legend">
+            <span>Less</span>
+            <div class="legend-colors">
+              <div class="legend-color" data-level="0"></div>
+              <div class="legend-color" data-level="1"></div>
+              <div class="legend-color" data-level="2"></div>
+              <div class="legend-color" data-level="3"></div>
+              <div class="legend-color" data-level="4"></div>
+            </div>
+            <span>More</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

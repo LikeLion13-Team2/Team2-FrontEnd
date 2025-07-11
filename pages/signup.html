@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>sign_up</title>
+    <link rel="stylesheet" href="/style/signup.css" />
+  </head>
+  <body>
+    <main class="sign-up-container">
+      <section class="nickname-section">
+        <h2 class="section-title">닉네임</h2>
+        <input
+          type="text"
+          class="nickname-input"
+          id="nicknameInput"
+          placeholder="닉네임을 입력해주세요"
+        />
+      </section>
+
+      <section class="goals-section">
+        <h2 class="section-title">공부 목표</h2>
+
+        <div class="goal-category">
+          <label class="category-label">학생</label>
+          <div class="tag-group">
+            <button class="tag-button">대입</button>
+            <button class="tag-button selected">
+              내신/학점
+            </button>
+            <button class="tag-button">편입</button>
+            <button class="tag-button">기타</button>
+          </div>
+        </div>
+
+        <div class="goal-category">
+          <label class="category-label">공무원</label>
+          <div class="tag-group">
+            <button class="tag-button">공무원</button>
+            <button class="tag-button">소방</button>
+            <button class="tag-button">경찰</button>
+            <button class="tag-button">기타</button>
+          </div>
+        </div>
+
+        <div class="goal-category professional-group">
+          <label class="category-label">전문직</label>
+          <div class="tag-group">
+            <div class="main-row">
+              <button class="tag-button">의사</button>
+              <button class="tag-button">공인중개사</button>
+              <button class="tag-button">교사</button>
+              <button class="tag-button">세무사</button>
+            </div>
+            <div class="sub-row">
+              <button class="tag-button">변호사</button>
+              <button class="tag-button">노무사</button>
+              <button class="tag-button">기타</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="goal-category">
+          <label class="category-label">기타</label>
+          <div class="tag-group">
+            <button class="tag-button selected">자격증</button>
+            <button class="tag-button selected">어학</button>
+            <button class="tag-button">취업</button>
+            <button class="tag-button">기타</button>
+          </div>
+        </div>
+      </section>
+
+      <button class="submit-button" id="submitButton">
+        공부 시작하기
+      </button>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      // 태그 버튼 클릭 시 selected 클래스 토글 (기존 로직 유지)
+      const tagButtons =
+        document.querySelectorAll(".tag-button");
+      tagButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          button.classList.toggle("selected");
+        });
+      });
+
+      const nicknameInput =
+        document.getElementById("nicknameInput");
+      const submitButton =
+        document.getElementById("submitButton");
+
+      submitButton.addEventListener("click", async () => {
+        // ... (제가 마지막으로 드린 통합 요청 로직) ...
+        const newNameValue = nicknameInput.value.trim();
+        const selectedGoals = Array.from(
+          document.querySelectorAll(".tag-button.selected")
+        ).map((button) => button.textContent.trim());
+        const goalsToSend = selectedGoals.join(",");
+
+        const accessToken = localStorage.getItem("accessToken");
+        if (!accessToken) {
+          alert("로그인 정보가 없습니다. 다시 로그인해주세요.");
+          window.location.href = "/loginpage.html";
+        }
+
+        try {
+          await axios.put(
+            "https://focuscoach.click/api/members/profile", // <-- 이 엔드포인트가 백엔드에 있어야 함!
+            {
+              newName: newNameValue,
+              goalNames: goalsToSend,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          alert("프로필이 성공적으로 설정되었습니다!");
+          window.location.href = "/pages/home.html";
+        } catch (error) {
+          console.error(
+            "프로필 설정 중 오류 발생:",
+            error.response?.data || error
+          );
+          let errorMessage =
+            "프로필 설정 중 오류가 발생했습니다.";
+          if (error.response?.data?.message) {
+            errorMessage += `: ${error.response.data.message}`;
+          } else if (error.message) {
+            errorMessage += `: ${error.message}`;
+          }
+          alert(errorMessage);
+        }
+      });
+    </script>
+  </body>
+</html>
