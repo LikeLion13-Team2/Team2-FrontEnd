@@ -77,6 +77,13 @@ body {
   background-clip: text;
 }
 
+.score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
 .highlight {
   color: #4f9aff;
   font-size: 48px;
@@ -397,54 +404,6 @@ body {
   position: relative;
 }
 
-/* 학습 시간에 따른 색상 레벨 */
-.heatmap-cell[data-level="0"] {
-  background-color: #eaf1ff; /* 기본 색상 */
-}
-
-.heatmap-cell[data-level="1"] {
-  background-color: #cdd9ff; /* 연한 파란색 */
-}
-
-.heatmap-cell[data-level="2"] {
-  background-color: #a8b8ff; /* 중간 파란색 */
-}
-
-.heatmap-cell[data-level="3"] {
-  background-color: #7a96ff; /* 진한 파란색 */
-}
-
-.heatmap-cell[data-level="4"] {
-  background-color: #4d74ff; /* 매우 진한 파란색 */
-}
-
-.heatmap-cell:hover {
-  transform: scale(1.2);
-  z-index: 1;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* 범례 스타일 */
-.legend-color[data-level="0"] {
-  background-color: #eaf1ff;
-}
-
-.legend-color[data-level="1"] {
-  background-color: #cdd9ff;
-}
-
-.legend-color[data-level="2"] {
-  background-color: #a8b8ff;
-}
-
-.legend-color[data-level="3"] {
-  background-color: #7a96ff;
-}
-
-.legend-color[data-level="4"] {
-  background-color: #4d74ff;
-}
-
 /* 툴팁 스타일 */
 .heatmap-tooltip {
   position: absolute;
@@ -521,6 +480,27 @@ body {
   background-color: #216e39;
 }
 
+/* 범례 스타일 */
+.legend-color[data-level="0"] {
+  background-color: #e0e0e0; /* 없음 */
+}
+
+.legend-color[data-level="1"] {
+  background-color: #e8f0a1; /* 낮음 */
+}
+
+.legend-color[data-level="2"] {
+  background-color: #cddc39; /* 보통 */
+}
+
+.legend-color[data-level="3"] {
+  background-color: #8bc34a; /* 집중 */
+}
+
+.legend-color[data-level="4"] {
+  background-color: #4caf50; /* 매우 집중 */
+}
+
 /* 반응형 */
 @media (max-width: 768px) {
   .heatmap-months {
@@ -566,10 +546,6 @@ body {
   .cards {
     flex-direction: column;
     gap: 16px;
-  }
-
-  .highlight {
-    font-size: 36px;
   }
 
   .header {

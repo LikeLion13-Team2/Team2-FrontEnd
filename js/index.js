@@ -612,7 +612,7 @@ async function fetchStudySession(sessionId) {
   }
 }
 
-// 히트맵 업데이트 함수
+// 기존 히트맵 업데이트 함수 (단일 세션 ID 처리)
 async function updateHeatmapForSession(sessionId) {
   const sessionData = await fetchStudySession(sessionId);
 
@@ -660,8 +660,49 @@ function getHeatmapColor(level) {
   }
 }
 
-// 페이지 로드 시 특정 세션 히트맵 업데이트
+// 학습 세션 리스트 조회 함수
+async function fetchSessionIds() {
+  try {
+    const url = `${API_BASE_URL}/v1/study-sessions`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      console.error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.isSuccess
+      ? data.result.map((session) => session.sessionId)
+      : [];
+  } catch (error) {
+    console.error("세션 ID 로드 실패:", error);
+    return [];
+  }
+}
+
+// 히트맵 업데이트 함수 (여러 세션 ID 처리)
+async function updateHeatmapForSessions() {
+  const sessionIds = await fetchSessionIds();
+
+  if (sessionIds.length === 0) {
+    console.log("세션 ID가 없습니다.");
+    return;
+  }
+
+  for (const sessionId of sessionIds) {
+    await updateHeatmapForSession(sessionId);
+  }
+}
+
+// 페이지 로드 시 모든 세션 히트맵 업데이트
 document.addEventListener("DOMContentLoaded", async function () {
-  const sessionId = 5; // 업데이트할 세션 ID (예시)
-  await updateHeatmapForSession(sessionId);
+  await updateHeatmapForSessions();
 });
