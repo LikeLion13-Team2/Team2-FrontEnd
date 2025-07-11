@@ -129,6 +129,31 @@ function calculateFocusType(reportData) {
   return { focusType, description };
 }
 
+// 점수에 따른 뱃지 계산 함수
+function calculateScoreBadge(score) {
+  if (score >= 0 && score <= 33) {
+    return {
+      text: "Bad",
+      class: "score-badge-bad",
+    };
+  } else if (score >= 34 && score <= 66) {
+    return {
+      text: "Normal",
+      class: "score-badge-normal",
+    };
+  } else if (score >= 67 && score <= 100) {
+    return {
+      text: "Good!",
+      class: "score-badge-good",
+    };
+  } else {
+    return {
+      text: "Good!",
+      class: "score-badge-good",
+    };
+  }
+}
+
 // UI 업데이트 함수
 function updateUI(reportData) {
   console.log("업데이트할 리포트 데이터:", reportData);
@@ -137,9 +162,36 @@ function updateUI(reportData) {
   const avgScoreElement = document.querySelector(
     ".score-section h2"
   );
+  const scoreBadgeElement =
+    document.querySelector(".score-badge");
+
   if (avgScoreElement) {
-    const score = Math.round(reportData.avgFocusScore * 100);
+    const score = Math.round(reportData.avgFocusScore * 3);
     avgScoreElement.textContent = `${score}점`;
+
+    console.log("계산된 점수:", score); // 디버깅용
+
+    // 점수에 따른 뱃지 업데이트
+    if (scoreBadgeElement) {
+      const badge = calculateScoreBadge(score);
+      console.log("적용할 뱃지:", badge); // 디버깅용
+
+      scoreBadgeElement.textContent = badge.text;
+
+      // 기존 뱃지 클래스 제거
+      scoreBadgeElement.classList.remove(
+        "score-badge-bad",
+        "score-badge-normal",
+        "score-badge-good"
+      );
+      // 새로운 뱃지 클래스 추가
+      scoreBadgeElement.classList.add(badge.class);
+
+      console.log(
+        "뱃지 클래스 적용 완료:",
+        scoreBadgeElement.className
+      ); // 디버깅용
+    }
   }
 
   // 나의 공부시간
@@ -156,31 +208,23 @@ function updateUI(reportData) {
   const statValues = document.querySelectorAll(
     ".stat-value span"
   );
-  if (statValues.length >= 6) {
+  if (statValues.length >= 4) {
+    // 누적 집중 시간
     statValues[0].textContent = `${formatMinutes(
       reportData.totalFocusSeconds
     )}분`;
+    // 쉬는 시간
     statValues[1].textContent = `${formatMinutes(
       reportData.totalBreakSeconds
     )}분`;
+    // 딴짓 누적 시간
     statValues[2].textContent = `${formatMinutes(
       reportData.totalDistractionSeconds
     )}분`;
+    // 최장 집중 시간
     statValues[3].textContent = `${formatMinutes(
       reportData.longestFocusSeconds
     )}분`;
-    const avgDistraction =
-      reportData.totalDistractionSeconds > 0
-        ? Math.round(
-            reportData.totalFocusSeconds /
-              (reportData.totalDistractionSeconds / 60)
-          )
-        : 0;
-    statValues[4].textContent = `${avgDistraction}분`;
-    const avgFocusLength = Math.round(
-      formatMinutes(reportData.longestFocusSeconds) * 0.7
-    );
-    statValues[5].textContent = `${avgFocusLength}분`;
   }
 
   // 집중 피크 타임 업데이트

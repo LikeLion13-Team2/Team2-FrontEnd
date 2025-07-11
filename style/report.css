@@ -126,6 +126,62 @@ body {
   animation: bounce 2s infinite;
 }
 
+/* 점수 뱃지 스타일 - 기본 */
+.score-badge {
+  padding: 6px 16px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+/* Bad 점수 (0-33점) */
+.score-badge.score-badge-bad {
+  background: linear-gradient(
+    45deg,
+    #ff6b6b,
+    #ee5a52
+  ) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Normal 점수 (34-66점) */
+.score-badge.score-badge-normal {
+  background: linear-gradient(
+    45deg,
+    #ffa726,
+    #ff9800
+  ) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(255, 167, 38, 0.3) !important;
+}
+
+/* Good 점수 (67-100점) */
+.score-badge.score-badge-good {
+  background: linear-gradient(
+    45deg,
+    #4caf50,
+    #45a049
+  ) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+}
+
+/* 호버 효과 */
+.score-badge:hover {
+  transform: scale(1.05);
+}
+
+/* 기본 score-badge 스타일 제거 (중복 방지) */
+.score-display .score-badge {
+  background: none;
+  box-shadow: none;
+}
+
 @keyframes bounce {
   0%,
   20%,
