@@ -2,6 +2,7 @@
 body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
+  min-width: 1250px;
   margin: 0;
   padding: 0;
   font-family: "Pretendard", -apple-system, BlinkMacSystemFont,
@@ -349,6 +350,7 @@ body {
   padding: 20px;
   margin-top: 20px;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  min-width: 780px;
 }
 
 .heatmap-months {
@@ -538,7 +540,10 @@ body {
   }
 
   .heatmap-grid {
-    grid-template-rows: repeat(7, 10px);
+    grid-auto-flow: row; /* 작은 화면에서는 행 방향으로 배치 */
+    grid-template-rows: repeat(53, auto); /* 주 단위로 배치 */
+    grid-template-columns: repeat(7, 12px); /* 요일별로 배치 */
+    gap: 2px;
   }
 
   .heatmap-cell {
@@ -549,6 +554,14 @@ body {
   .legend-color {
     width: 10px;
     height: 10px;
+  }
+
+  .heatmap-days span {
+    font-size: 8px; /* 요일 텍스트 크기 조정 */
+  }
+
+  .heatmap-months span {
+    font-size: 10px; /* 월 텍스트 크기 조정 */
   }
 }
 
