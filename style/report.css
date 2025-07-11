@@ -434,18 +434,15 @@ body {
 
 /* 포커스 상태별 아이콘 추가 */
 .stat-item.focus::before {
-  content: "🎯";
+  content: "⏱️";
 }
 .stat-item.break::before {
-  content: "☕";
+  content: "⏱️";
 }
 .stat-item.distraction::before {
-  content: "📱";
+  content: "⏱️";
 }
 .stat-item.longest::before {
-  content: "🏆";
-}
-.stat-item.interval::before {
   content: "⏱️";
 }
 .stat-item.average::before {
