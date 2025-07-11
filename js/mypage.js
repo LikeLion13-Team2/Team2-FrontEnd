@@ -1,3 +1,5 @@
+// mypage.js (완전한 코드, 복사-붙여넣기 가능)
+
 document.addEventListener("DOMContentLoaded", () => {
   const nicknameInput = document.getElementById("nicknameInput");
   const nicknameEditBtn = document.querySelector(
@@ -9,36 +11,36 @@ document.addEventListener("DOMContentLoaded", () => {
   let isNicknameEditing = false;
   let isGoalsEditing = false;
 
+  // 편집/완료 버튼 텍스트와 아이콘 토글 함수
   const toggleEditButton = (button, isEditingMode) => {
     button.innerHTML = isEditingMode
       ? `<img src="/assets/mypage_icon/done.png" alt="완성" class="icon-img" /> 완료`
       : `<img src="/assets/mypage_icon/edit.png" alt="편집" class="icon-img" /> 편집`;
   };
 
+  // 닉네임 입력 필드 활성화/비활성화 함수
   const toggleNicknameEditMode = (enable) => {
     nicknameInput.disabled = !enable;
     if (enable) nicknameInput.focus();
   };
 
+  // 태그 버튼 활성화/비활성화 함수
   const toggleTagButtons = (enable) => {
     tagButtons.forEach((btn) => (btn.disabled = !enable));
   };
 
-  // --- 초기 사용자 프로필 로딩 함수 추가 ---
+  // --- 초기 사용자 프로필 로딩 함수 ---
   const fetchUserProfile = async () => {
-    const accessToken = localStorage.getItem("accessToken"); // Access Token 가져오기
+    const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
-      console.error(
-        "Access Token이 없습니다. 로그인 상태를 확인하세요."
-      );
       alert("로그인이 필요합니다. 다시 로그인해주세요.");
-      window.location.href = "/index.html"; // 로그인 페이지로 리다이렉트 (필요시 경로 수정)
+      // 로그인 페이지 URL은 실제 경로에 맞게 수정해주세요.
+      window.location.href = "/pages/loginpage.html";
       return;
     }
 
     try {
-      // 백엔드에서 사용자 프로필을 불러오는 GET API 주소로 변경하세요!
-      // 예시: 'https://focuscoach.click/api/user/profile' 또는 'https://focuscoach.click/api/members/profile' 등
+      // 백엔드에서 사용자 프로필을 불러오는 GET API
       const response = await axios.get(
         "https://focuscoach.click/api/members/me",
         {
@@ -48,32 +50,48 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       );
 
-      const userData = response.data; // Axios는 응답 데이터를 response.data에 넣어줍니다.
-      console.log("사용자 프로필 로드 성공:", userData);
+      // 백엔드 응답의 실제 구조에 따라 `response.data` 또는 `response.data.result`를 사용하세요.
+      // 대부분의 경우 `response.data.result` 형태입니다.
+      const userData = response.data.result;
 
-      // 닉네임 필드 채우기: 백엔드에서 'newName'으로 내려주므로 userData.newName을 사용
+      // 닉네임 필드 채우기
       if (userData.newName) {
         nicknameInput.value = userData.newName;
+      } else if (userData.memberName) {
+        nicknameInput.value = userData.memberName;
       } else {
-        nicknameInput.value = "닉네임을 설정해주세요."; // 닉네임이 없을 경우 기본값
+        nicknameInput.value = "닉네임을 설정해주세요.";
       }
 
-      // 공부 목표 필드 채우기 (선택된 태그 활성화): 백엔드에서 'goalName'으로 내려주므로 userData.goalName을 사용
-      if (
-        userData.goalName &&
-        Array.isArray(userData.goalName)
-      ) {
-        // 모든 버튼의 'selected' 클래스 초기화 (중복 방지)
+      // 공부 목표 필드 채우기 (선택된 태그 활성화)
+      if (userData.goalName) {
+        let goalsToActivate = [];
+        if (Array.isArray(userData.goalName)) {
+          // 백엔드에서 goalName이 이미 배열로 온 경우
+          goalsToActivate = userData.goalName.map((goal) =>
+            goal.trim()
+          );
+        } else if (typeof userData.goalName === "string") {
+          // 백엔드에서 goalName이 콤마로 구분된 문자열로 온 경우 (예: "대입,내신/학점")
+          goalsToActivate = userData.goalName
+            .split(",")
+            .map((goal) => goal.trim());
+        }
+
+        // 모든 버튼의 'selected' 클래스 초기화 (중복 활성화 방지)
         tagButtons.forEach((btn) =>
           btn.classList.remove("selected")
         );
 
-        tagButtons.forEach((btn) => {
-          const buttonText = btn.textContent.trim();
-          // 백엔드에서 받은 goalName 배열에 현재 버튼의 텍스트가 포함되어 있으면 'selected' 클래스 추가
-          if (userData.goalName.includes(buttonText)) {
-            btn.classList.add("selected");
-          }
+        // 불러온 목표에 따라 해당 버튼 활성화
+        goalsToActivate.forEach((goalText) => {
+          tagButtons.forEach((btn) => {
+            const buttonText = btn.textContent.trim();
+            // 버튼 텍스트와 불러온 목표 텍스트가 정확히 일치하면 'selected' 클래스 추가
+            if (buttonText === goalText) {
+              btn.classList.add("selected");
+            }
+          });
         });
       }
     } catch (error) {
@@ -85,43 +103,40 @@ document.addEventListener("DOMContentLoaded", () => {
         "프로필 정보를 불러오는데 실패했습니다: " +
           (error.response?.data?.message || error.message)
       );
-      // 필요시, 에러 발생 시 로그인 페이지로 리다이렉트 등 추가 처리
     }
   };
   // --- 초기 사용자 프로필 로딩 함수 끝 ---
 
-  // === 닉네임 편집 ===
+  // === 닉네임 편집 이벤트 리스너 ===
   nicknameEditBtn.addEventListener("click", async () => {
     if (!isNicknameEditing) {
-      // 편집 시작
+      // 편집 모드 시작
       isNicknameEditing = true;
       toggleEditButton(nicknameEditBtn, true);
       toggleNicknameEditMode(true);
     } else {
       // 편집 완료, 백엔드 전송
-      const newName = nicknameInput.value.trim(); // 닉네임 변수명도 'newName'으로 일관성 있게!
+      const newName = nicknameInput.value.trim();
       const accessToken = localStorage.getItem("accessToken");
 
       if (!accessToken) {
         alert("로그인 정보가 없습니다. 다시 로그인해주세요.");
-        window.location.href = "/index.html";
+        window.location.href = "/pages/loginpage.html"; // 로그인 페이지 URL은 실제 경로에 맞게 수정
         return;
       }
 
       try {
-        // PATCH 요청, 엔드포인트는 백엔드에서 알려준 'https://focuscoach.click/api/members/name' 사용
-        // 보낼 데이터의 키는 'newName'으로 변경!
+        // PATCH 요청으로 닉네임 업데이트
         await axios.patch(
-          "https://focuscoach.click/api/members/name",
-          { newName: newName }, // <--- 여기 수정됨: 'nickname' 대신 'newName'
+          "https://focuscoach.click/api/members/name", // 닉네임 업데이트 API 엔드포인트
+          { newName: newName }, // 백엔드가 'newName'이라는 키를 기대합니다.
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`, // Access Token 추가
-              "Content-Type": "application/json", // 데이터 타입 명시
+              Authorization: `Bearer ${accessToken}`, // Access Token 포함
+              "Content-Type": "application/json", // JSON 형식으로 데이터 전송 명시
             },
           }
         );
-        console.log("닉네임 저장 완료:", newName);
         alert("닉네임이 저장되었습니다.");
       } catch (error) {
         console.error(
@@ -139,10 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === 공부 목표 편집 ===
+  // === 공부 목표 편집 이벤트 리스너 ===
   goalsEditBtn.addEventListener("click", async () => {
     if (!isGoalsEditing) {
-      // 편집 시작
+      // 편집 모드 시작
       isGoalsEditing = true;
       toggleEditButton(goalsEditBtn, true);
       toggleTagButtons(true);
@@ -150,29 +165,29 @@ document.addEventListener("DOMContentLoaded", () => {
       // 편집 완료, 백엔드 전송
       const selectedGoals = Array.from(
         document.querySelectorAll(".tag-button.selected")
-      ).map((btn) => btn.textContent.trim());
+      ).map((btn) => btn.textContent.trim()); // 현재 선택된 태그들의 텍스트를 배열로 가져옴
+
       const accessToken = localStorage.getItem("accessToken");
 
       if (!accessToken) {
         alert("로그인 정보가 없습니다. 다시 로그인해주세요.");
-        window.location.href = "/index.html";
+        window.location.href = "pages/loginpage.html"; // 로그인 페이지 URL은 실제 경로에 맞게 수정
         return;
       }
 
       try {
-        // PUT 요청, 엔드포인트는 '/api/mypage/goals' 사용 (백엔드와 확인 필요)
-        // 보낼 데이터의 키는 'goalName'으로 변경!
+        // 중요: 이 PUT 요청의 'goalName' 필드가 '배열'을 받는지, 아니면 '콤마 구분 문자열'을 받는지
+        // 백엔드에 확인해야 합니다. 현재 코드는 '배열'을 보내도록 되어 있습니다.
         await axios.put(
-          "https://focuscoach.click/api/members/goals",
-          { goalName: selectedGoals }, // <--- 여기 수정됨: 'goals' 대신 'goalName'
+          "https://focuscoach.click/api/members/goals", // 공부 목표 업데이트 API 엔드포인트
+          { goalName: selectedGoals }, // selectedGoals는 배열 (예: ["대입", "내신"])
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`, // Access Token 추가
-              "Content-Type": "application/json", // 데이터 타입 명시
+              Authorization: `Bearer ${accessToken}`, // Access Token 포함
+              "Content-Type": "application/json", // JSON 형식으로 데이터 전송 명시
             },
           }
         );
-        console.log("공부 목표 저장 완료:", selectedGoals);
         alert("공부 목표가 저장되었습니다.");
       } catch (error) {
         console.error(
@@ -194,15 +209,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // === 태그 버튼 클릭 시 선택/해제 토글 ===
   tagButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      if (!isGoalsEditing) return; // 편집 모드일 때만 가능
+      // 편집 모드일 때만 태그 선택/해제 가능
+      if (!isGoalsEditing) return;
       btn.classList.toggle("selected");
     });
   });
 
   // === 페이지 로드 시 초기 상태 및 프로필 정보 로드 ===
-  toggleNicknameEditMode(false); // 초기에는 닉네임 입력 비활성화
-  toggleTagButtons(false); // 초기에는 태그 버튼 비활성화
+  // 초기에는 닉네임 입력 필드와 태그 버튼 비활성화
+  toggleNicknameEditMode(false);
+  toggleTagButtons(false);
 
-  // 페이지 로드 후 사용자 프로필 정보 불러오기
-  fetchUserProfile(); // <--- 이 함수를 호출하여 초기 데이터를 로드합니다.
+  // DOMContentLoaded 이벤트 발생 시, 사용자 프로필 정보 불러오는 함수 호출
+  fetchUserProfile();
 });
