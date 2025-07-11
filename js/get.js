@@ -4,7 +4,7 @@ document
     const sessionId =
       document.getElementById("sessionIdInput").value;
     const token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyMzk4NDYsImV4cCI6MTc1MjI2MTQ0Nn0.BHXn1uxPnEjvUMcCoPGpU9Nn_je6v85C1gwm3Ut9Egg";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNDI4MjYsImV4cCI6MTc1MjI2NDQyNn0.BR0_UWtQUqMsrO0VMDuUf7Hw-tNMw2oak35olCgg8_g";
 
     if (!sessionId) {
       alert("세션 ID를 입력하세요.");
