@@ -34,19 +34,31 @@ window.onload = () => {
           console.error("❌ 백엔드 응답에 Access Token이 없습니다:", data);
           alert("로그인 처리 실패: Access Token을 받지 못했습니다.");
           // 토큰이 없으면 리디렉션하지 않고 함수 종료
-          window.history.replaceState({}, document.title, "/loginpage.html"); // URL 정리
+          window.history.replaceState(
+            {},
+            document.title,
+            "/pages/loginpage.html"
+          ); // URL 정리
           return;
         }
 
         // ✅ URL에서 쿼리스트링 제거
-        window.history.replaceState({}, document.title, "/loginpage.html");
+        window.history.replaceState(
+          {},
+          document.title,
+          "/pages/loginpage.html"
+        );
 
         // ✅ 필요한 페이지로 리디렉션
         window.location.href = "/pages/signup.html";
       })
       .catch((err) => {
         console.error("❌ 로그인 실패:", err);
-        window.history.replaceState({}, document.title, "/loginpage.html");
+        window.history.replaceState(
+          {},
+          document.title,
+          "/pages/loginpage.html"
+        );
       });
   }
 };
