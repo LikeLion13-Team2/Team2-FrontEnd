@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- 초기 사용자 프로필 로딩 함수 ---
   const fetchUserProfile = async () => {
     const token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNzMzMzEsImV4cCI6MTc1MjI5NDkzMX0.6Io3OQ4bFVGPfX7GH1zGqlfwUkY9DhVdpwwlFfbfLiY";
 
     try {
       // 백엔드에서 사용자 프로필을 불러오는 GET API
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         // PUT 요청으로 닉네임 업데이트
         const token =
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNzMzMzEsImV4cCI6MTc1MjI5NDkzMX0.6Io3OQ4bFVGPfX7GH1zGqlfwUkY9DhVdpwwlFfbfLiY";
         await axios.put(
           "https://focuscoach.click/api/members/name", // 닉네임 업데이트 API 엔드포인트
           { newName: newName }, // 백엔드가 'newName'이라는 키를 기대합니다.
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         // PUT 요청으로 공부 목표 업데이트
         const token =
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNzMzMzEsImV4cCI6MTc1MjI5NDkzMX0.6Io3OQ4bFVGPfX7GH1zGqlfwUkY9DhVdpwwlFfbfLiY";
         await axios.put(
           "https://focuscoach.click/api/members/goals", // 공부 목표 업데이트 API 엔드포인트
           { goalNames: goalNamesString }, // API 문서에 따라 goalNames 필드에 콤마로 구분된 문자열 전송
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         // 로그아웃 API 호출
         const token =
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNzMzMzEsImV4cCI6MTc1MjI5NDkzMX0.6Io3OQ4bFVGPfX7GH1zGqlfwUkY9DhVdpwwlFfbfLiY";
 
         await axios.delete(
           "https://focuscoach.click/api/members/logout",
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         // 회원 탈퇴 API 호출
         const token =
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNjU0NjgsImV4cCI6MTc1MjI4NzA2OH0.LOvj4g-VnnLJVWbCrjmizOVvBP0DOP87qBebZ68SiEg";
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXBzdG9uZXJ1ZG9scGgxQGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyNzMzMzEsImV4cCI6MTc1MjI5NDkzMX0.6Io3OQ4bFVGPfX7GH1zGqlfwUkY9DhVdpwwlFfbfLiY";
 
         await axios.delete(
           "https://focuscoach.click/api/members/me",
