@@ -18,12 +18,12 @@
       <div class="timer-container">
         <div class="circle">
           <svg class="progress-ring" width="120" height="120">
-            <circle class="ring-bg" cx="60" cy="60" r="50" />
+            <circle class="ring-bg" cx="100" cy="100" r="80" />
             <circle
               class="ring-progress"
-              cx="60"
-              cy="60"
-              r="50"
+              cx="100"
+              cy="100"
+              r="80"
             />
           </svg>
           <div class="circle-inner">
@@ -34,10 +34,6 @@
         <div class="side-controls">
           <div class="timer-controls">
             <div class="starting-controls">
-              <select class="dropdown">
-                <option>카테고리</option>
-              </select>
-
               <div class="duration-control">
                 <button id="minus">–</button>
                 <input
@@ -95,14 +91,6 @@
           "
         ></div>
       </div>
-    </div>
-    <div style="margin-top: 20px; margin-right: 100px">
-      <input
-        type="number"
-        id="sessionIdInput"
-        placeholder="세션 ID 입력"
-      />
-      <button id="fetchSessionBtn">세션 조회</button>
     </div>
     <script src="/js/popup.js"></script>
     <script src="/js/get.js"></script>
