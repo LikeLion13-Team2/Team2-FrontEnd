@@ -363,7 +363,7 @@ function sendStudySession() {
   };
 
   const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoeXVuYmluaTI5NDJAZ21haWwuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTc1MjE2MzQ4NiwiZXhwIjoxNzUyMTY1Mjg2fQ.VyJBXGfIuglOCDu3aQNZX1JpQBK1mVnMVrnjbuanWHc";
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYW5taW4yNzQ3QGdtYWlsLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTIyMzMzNjgsImV4cCI6MTc1MjI1NDk2OH0.-S9TNLtJI7ir-j5TRC2BFXLDYWtd-t0DXObKHYHh_Do";
 
   fetch("https://focuscoach.click/api/v1/study-sessions", {
     method: "POST",
